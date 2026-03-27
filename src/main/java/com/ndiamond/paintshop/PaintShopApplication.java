@@ -1,5 +1,6 @@
 package com.ndiamond.paintshop;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.boot.SpringApplication;
@@ -12,12 +13,18 @@ import java.util.Base64;
 public class PaintShopApplication {
 
 	public static void main(String[] args) {
+
+		Dotenv dotenv = Dotenv.load();
+
+		System.setProperty("DB_USERNAME", dotenv.get("DB_USERNAME"));
+		System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
+		System.setProperty("DB_URL", dotenv.get("DB_URL"));
+
+		System.setProperty("jwtSecret", dotenv.get("jwtSecret"));
+
 		SpringApplication.run(PaintShopApplication.class, args);
 
-//		// Generate secure 256-bit key for HS256
-//		SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-//		String base64Key = Base64.getEncoder().encodeToString(key.getEncoded());
-//		System.out.println("Base64 key: " + base64Key);
+
 	}
 
 }
